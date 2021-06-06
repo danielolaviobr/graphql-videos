@@ -26,3 +26,21 @@ model authors {
   age    Int
   videos videos[]
 }
+
+model Users {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  age       Int?
+  createdAt DateTime @default(now())
+  Tokens    Tokens[]
+}
+
+model Tokens {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  expiresAt DateTime
+  user      Users    @relation(fields: [usersId], references: [id])
+  usersId   String
+}
